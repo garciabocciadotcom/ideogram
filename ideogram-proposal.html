@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Great.co × Ideogram — Website Redesign Proposal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0A0A0A;
+    --white: #FAFAF8;
+    --accent: #C8FF00;
+    --mid: #1A1A1A;
+    --border: rgba(255,255,255,0.08);
+    --muted: rgba(255,255,255,0.45);
+    --serif: 'DM Serif Display', serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 52px 64px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(200,255,0,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .logo {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    color: var(--white);
+  }
+
+  .logo span { color: var(--accent); }
+
+  .cover-tag {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 40px;
+  }
+
+  .cover-main { padding: 0 0 20px; }
+
+  .cover-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+  }
+
+  .cover-title {
+    font-family: var(--serif);
+    font-size: clamp(52px, 6vw, 88px);
+    line-height: 1.0;
+    font-weight: 400;
+    margin-bottom: 32px;
+    max-width: 780px;
+  }
+
+  .cover-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .cover-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    line-height: 1.65;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-item label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .meta-item span {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 80px 64px;
+    border-bottom: 1px solid var(--border);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-wide {
+    padding: 80px 64px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.5vw, 48px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 40px;
+  }
+
+  p { color: rgba(255,255,255,0.75); margin-bottom: 18px; font-size: 16px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── SITUATION ── */
+  .obs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 40px;
+  }
+
+  .obs-item {
+    background: var(--mid);
+    padding: 28px 32px;
+  }
+
+  .obs-item:first-child { border-radius: 12px 0 0 0; }
+  .obs-item:nth-child(2) { border-radius: 0 12px 0 0; }
+  .obs-item:nth-last-child(2) { border-radius: 0 0 0 12px; }
+  .obs-item:last-child { border-radius: 0 0 12px 0; }
+
+  .obs-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .obs-text {
+    font-size: 15px;
+    color: var(--white);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ── SCOPE ── */
+  .scope-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .scope-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+  }
+
+  .scope-icon {
+    width: 36px; height: 36px;
+    background: rgba(200,255,0,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+    font-size: 16px;
+  }
+
+  .scope-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+
+  .scope-card p { font-size: 14px; margin: 0; }
+
+  .scope-list {
+    list-style: none;
+    margin-top: 10px;
+  }
+
+  .scope-list li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    padding: 4px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .scope-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  /* ── PROCESS ── */
+  .process-steps {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    background: var(--mid);
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .step:first-child { border-radius: 12px 12px 0 0; }
+  .step:last-child { border-radius: 0 0 12px 12px; }
+
+  .step-left {
+    padding: 28px 32px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .step-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .step-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .step-days {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .step-right {
+    padding: 28px 32px;
+  }
+
+  .step-right p { font-size: 14px; margin: 0; }
+
+  /* ── PRICING ── */
+  .pricing-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-top: 40px;
+  }
+
+  .price-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card.featured {
+    border-color: var(--accent);
+    background: rgba(200,255,0,0.03);
+  }
+
+  .price-card.featured::before {
+    content: 'Recommended';
+    position: absolute;
+    top: 20px; right: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--accent);
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+
+  .price-tier {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .price-name {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+
+  .price-amount {
+    font-size: 42px;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .price-card.featured .price-amount { color: var(--accent); }
+
+  .price-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 32px;
+  }
+
+  .price-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 24px;
+  }
+
+  .price-includes {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+
+  .price-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .price-check {
+    width: 16px; height: 16px;
+    background: rgba(200,255,0,0.15);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 10px;
+    color: var(--accent);
+  }
+
+  .price-feature span {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.4;
+  }
+
+  .price-timeline {
+    margin-top: 28px;
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .price-timeline strong { color: var(--white); }
+
+  /* ── ASSUMPTIONS ── */
+  .assumptions {
+    margin-top: 40px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  .assumptions h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .assumption-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .assumption-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .assumption-key {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    min-width: 180px;
+    flex-shrink: 0;
+  }
+
+  .assumption-val {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ── WHY ── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 40px;
+  }
+
+  .why-item {
+    background: var(--mid);
+    padding: 32px;
+  }
+
+  .why-item:first-child { border-radius: 12px 0 0 12px; }
+  .why-item:last-child { border-radius: 0 12px 12px 0; }
+
+  .why-num {
+    font-family: var(--serif);
+    font-size: 48px;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+
+  .why-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .why-desc { font-size: 13px; margin: 0; }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .footer-left { }
+
+  .footer-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+
+  .footer-cta {
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.2;
+    max-width: 400px;
+  }
+
+  .footer-cta em { font-style: italic; color: var(--accent); }
+
+  .footer-right {
+    text-align: right;
+  }
+
+  .footer-contact {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .footer-contact a {
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .footer-logo {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--white);
+    margin-top: 20px;
+  }
+
+  .footer-logo span { color: var(--accent); }
+
+  /* ── PAGE BREAKS ── */
+  @media print {
+    .cover { page-break-after: always; }
+    .section, .section-wide { page-break-inside: avoid; }
+  }
+
+  /* ── DIVIDER ── */
+  hr.section-break {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="logo">Great<span>.</span>co</div>
+    <div class="cover-tag">Confidential · May 2025</div>
+  </div>
+
+  <div class="cover-main">
+    <div class="cover-label">Website Redesign Proposal</div>
+    <h1 class="cover-title">A site that matches<br><em>what Ideogram can do.</em></h1>
+    <p class="cover-sub">Homepage + feature pages redesigned and built for the new brand. Fast turnaround. No noise. Code delivered.</p>
+  </div>
+
+  <div class="cover-meta">
+    <div class="meta-item">
+      <label>Prepared for</label>
+      <span>Ryan Johnson, Ideogram</span>
+    </div>
+    <div class="meta-item">
+      <label>Prepared by</label>
+      <span>Nico, Great.co</span>
+    </div>
+    <div class="meta-item">
+      <label>Project type</label>
+      <span>Design + Development</span>
+    </div>
+    <div class="meta-item">
+      <label>Target launch</label>
+      <span>~May 24, 2025</span>
+    </div>
+  </div>
+</div>
+
+<!-- SITUATION -->
+<div class="section">
+  <div class="section-num">01 — Context</div>
+  <h2 class="section-title">Where things stand</h2>
+  <p>Ideogram has a new brand and a clear product story. The current site doesn't reflect either. That's the gap. You need a homepage and feature pages that match where the company is now — not where it was when the site was built.</p>
+  <p>You've also got a real deadline and a specific technical requirement: clean HTML/CSS/JS, self-hosted, no CMS. That's a setup we work well with — it keeps things fast and gives your team full control after delivery.</p>
+
+  <div class="obs-grid">
+    <div class="obs-item">
+      <div class="obs-label">Current state</div>
+      <p class="obs-text">Site doesn't reflect new brand. Copy on the homepage is being rewritten. Feature pages exist but need a visual overhaul.</p>
+    </div>
+    <div class="obs-item">
+      <div class="obs-label">What you need</div>
+      <p class="obs-text">Homepage + ~7 feature pages. Design 2–3 unique templates, apply to the rest. Delivered as live code.</p>
+    </div>
+    <div class="obs-item">
+      <div class="obs-label">Technical constraint</div>
+      <p class="obs-text">Plain HTML/CSS/JS. Self-hosted. No Framer, no Webflow, no platform lock-in. Designed for Claude Code compatibility.</p>
+    </div>
+    <div class="obs-item">
+      <div class="obs-label">Timeline</div>
+      <p class="obs-text">Target: May 19–24. Tight but achievable with a fast feedback loop and parallel design + dev track.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SCOPE -->
+<div class="section">
+  <div class="section-num">02 — Scope</div>
+  <h2 class="section-title">What's included</h2>
+  <p>We design the homepage and two feature page templates. Your dev team applies those templates to the remaining pages — or we handle it in Option B. Every deliverable is code, not a Figma file.</p>
+
+  <div class="scope-grid">
+    <div class="scope-card">
+      <div class="scope-icon">◎</div>
+      <h3>Homepage</h3>
+      <p>Full redesign. New copy (provided by your team), new visual direction, scroll interactions, responsive.</p>
+      <ul class="scope-list">
+        <li>Hero + value prop</li>
+        <li>Feature showcase sections</li>
+        <li>Social proof / use case grid</li>
+        <li>CTA + footer</li>
+      </ul>
+    </div>
+    <div class="scope-card">
+      <div class="scope-icon">▦</div>
+      <h3>Feature Page Templates (×2)</h3>
+      <p>Two distinct layout templates for the feature pages — designed to be reused across all 7 without additional design work.</p>
+      <ul class="scope-list">
+        <li>Hero + feature breakdown</li>
+        <li>Reusable component system</li>
+        <li>Consistent nav + footer</li>
+        <li>Built to scale to remaining pages</li>
+      </ul>
+    </div>
+    <div class="scope-card">
+      <div class="scope-icon">✦</div>
+      <h3>Design Direction</h3>
+      <p>We review your Figma inspo board, research the new brand assets, and propose a clear visual direction before building.</p>
+      <ul class="scope-list">
+        <li>Type + color direction</li>
+        <li>Motion / scroll behavior</li>
+        <li>Layout language for all pages</li>
+      </ul>
+    </div>
+    <div class="scope-card">
+      <div class="scope-icon">⟐</div>
+      <h3>Code Delivery</h3>
+      <p>Final output is clean, commented HTML/CSS/JS. Structured so your team (or Claude Code) can maintain and extend it.</p>
+      <ul class="scope-list">
+        <li>Hosted and live by deadline</li>
+        <li>Mobile responsive</li>
+        <li>Clean file structure</li>
+        <li>2 rounds of revisions included</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="section">
+  <div class="section-num">03 — Process</div>
+  <h2 class="section-title">How we'll work</h2>
+  <p>Three weeks. Parallel design and dev tracks. You review at each gate — we don't disappear and return with a finished site.</p>
+
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">Week 1</div>
+        <div class="step-name">Direction</div>
+        <div class="step-days">Days 1–4</div>
+      </div>
+      <div class="step-right">
+        <p>Brand assets + new copy received. We review your inspo board and propose visual direction: type, color, layout language, motion approach. You approve before we touch a line of code.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">Week 1–2</div>
+        <div class="step-name">Homepage Build</div>
+        <div class="step-days">Days 4–10</div>
+      </div>
+      <div class="step-right">
+        <p>Homepage designed and built simultaneously. First live preview by end of Week 1. You give feedback, we iterate. Target: homepage signed off by Day 10.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">Week 2</div>
+        <div class="step-name">Feature Templates</div>
+        <div class="step-days">Days 10–15</div>
+      </div>
+      <div class="step-right">
+        <p>Two feature page templates built using the design system established in the homepage. Fast to produce because the pattern is already locked. First preview by Day 12.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">Week 3</div>
+        <div class="step-name">Polish + Launch</div>
+        <div class="step-days">Days 15–20</div>
+      </div>
+      <div class="step-right">
+        <p>Final revisions, mobile QA, cross-browser check, deployment. Site goes live by May 24. Handoff doc included for your team.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section">
+  <div class="section-num">04 — Investment</div>
+  <h2 class="section-title">Two ways to engage</h2>
+  <p>Three options, all including design and development. The difference is how much of the site ships, and how it moves.</p>
+
+  <div class="pricing-wrap">
+    <div class="price-card">
+      <div class="price-tier">Option A</div>
+      <div class="price-name">Core Redesign</div>
+      <div class="price-amount">$15,000</div>
+      <div class="price-note">Homepage + 2 feature templates, designed & built</div>
+
+      <div class="price-divider"></div>
+
+      <div class="price-includes">Includes</div>
+
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Homepage — full redesign, built in HTML/CSS/JS</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>2 feature page templates, production-ready</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Reusable component system for remaining pages</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Visual direction + design rationale doc</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>2 rounds of revisions</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Static — no custom animations</span>
+      </div>
+
+      <div class="price-timeline">
+        <strong>Best for:</strong> teams applying templates in-house or via Claude Code
+      </div>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tier">Option B</div>
+      <div class="price-name">Core + Pages</div>
+      <div class="price-amount">$21,000</div>
+      <div class="price-note">Homepage + 4 feature pages, designed & built</div>
+
+      <div class="price-divider"></div>
+
+      <div class="price-includes">Includes</div>
+
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Everything in Option A</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>4 feature pages built and live (not all 7)</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Full QA, mobile + desktop</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>2 rounds of revisions</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Static — no custom animations</span>
+      </div>
+
+      <div class="price-timeline">
+        <strong>Best for:</strong> partial launch with internal team finishing remaining pages
+      </div>
+    </div>
+
+    <div class="price-card featured">
+      <div class="price-tier">Option C</div>
+      <div class="price-name">Full Site Launch</div>
+      <div class="price-amount">$22,000</div>
+      <div class="price-note">All 7 pages + custom Unicorn Studio animations</div>
+
+      <div class="price-divider"></div>
+
+      <div class="price-includes">Includes</div>
+
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Everything in Option A</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>All 7 feature pages built and live</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Custom Unicorn Studio animations — scroll-triggered, interactive</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Full QA across all pages, mobile + desktop</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>Deployment + DNS setup support</span>
+      </div>
+      <div class="price-feature">
+        <div class="price-check">✓</div>
+        <span>3 rounds of revisions</span>
+      </div>
+
+      <div class="price-timeline">
+        <strong>Best for:</strong> shipping a complete, polished site that matches Ideogram's product quality
+      </div>
+    </div>
+  </div>
+
+  <div class="assumptions">
+    <h3>Assumptions & conditions</h3>
+    <div class="assumption-row">
+      <div class="assumption-key">Copy</div>
+      <div class="assumption-val">Homepage copy delivered by client before build starts. Feature page copy from existing site.</div>
+    </div>
+    <div class="assumption-row">
+      <div class="assumption-key">Brand assets</div>
+      <div class="assumption-val">New logo, colors, and type system delivered in final form before Day 1.</div>
+    </div>
+    <div class="assumption-row">
+      <div class="assumption-key">Feedback turnaround</div>
+      <div class="assumption-val">We need consolidated feedback within 24 hours at each review gate to hit the May 24 target.</div>
+    </div>
+    <div class="assumption-row">
+      <div class="assumption-key">Backend</div>
+      <div class="assumption-val">No backend integrations. Static HTML/CSS/JS only.</div>
+    </div>
+    <div class="assumption-row">
+      <div class="assumption-key">Payment terms</div>
+      <div class="assumption-val">50% to start, 50% on delivery.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY -->
+<div class="section">
+  <div class="section-num">05 — Why us</div>
+  <h2 class="section-title">What we bring to this</h2>
+  <p>We've built for AI companies at this stage before. We know how to move fast without producing something generic.</p>
+
+  <div class="why-grid">
+    <div class="why-item">
+      <div class="why-num">10+</div>
+      <div class="why-label">AI startups shipped</div>
+      <p class="why-desc">Sully.ai, Bem.ai, DineSight, JustPaid — we've worked across the stack of AI-native brands.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-num">3wk</div>
+      <div class="why-label">Delivery window</div>
+      <p class="why-desc">We run design and development in parallel. You get reviews early, not at the end.</p>
+    </div>
+    <div class="why-item">
+      <div class="why-num">0</div>
+      <div class="why-label">Platform lock-in</div>
+      <p class="why-desc">Clean HTML/CSS/JS. Your team owns it. Claude Code-compatible from day one.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-left">
+    <div class="footer-label">Next step</div>
+    <div class="footer-cta">Let's confirm scope and<br><em>get started this week.</em></div>
+  </div>
+  <div class="footer-right">
+    <div class="footer-contact">Questions? <a href="mailto:nico@great.co">nico@great.co</a></div>
+    <div class="footer-contact">great.co</div>
+    <div class="footer-logo">Great<span>.</span>co</div>
+  </div>
+</div>
+
+</body>
+</html>
